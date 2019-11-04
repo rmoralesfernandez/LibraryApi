@@ -19,6 +19,7 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
     }
 
     /**

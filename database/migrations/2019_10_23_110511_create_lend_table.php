@@ -17,6 +17,9 @@ class CreateLendTable extends Migration
             $table->primary(['id_user', 'id_book']);
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_book');
+
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_book')->references('id')->on('books');
             $table->timestamps();
         });
     }
