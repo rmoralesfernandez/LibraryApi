@@ -13,4 +13,13 @@ class book_controller extends Controller
             print($value);
         }
     }
+
+    public function postBooks(Request $request) {
+        $book = new Book;
+        $book->title = $request->title;
+        $book->description = $request->description;
+        $book->save();
+    }
+
+
 }
