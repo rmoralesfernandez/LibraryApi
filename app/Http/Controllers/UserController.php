@@ -34,7 +34,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function userStore(Request $request)
     {
         $user = new User();
         $user->name = $request->name;
@@ -45,7 +45,6 @@ class UserController extends Controller
         $key = "example-key";
         $data_token = [
             "email" => $user->email,
-            "password" => $user->password
         ];
 
         $token = JWT::encode($data_token, $key);
@@ -95,4 +94,38 @@ class UserController extends Controller
     {
         //
     }
+    /*
+    protected function respondWithToken () {
+        return response()->json([
+
+            'acces_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => 60
+        ]);
+    }
+    */
+
+    public function login(Request $request) {
+        
+        //$credentials = request(['email', 'password']);
+
+        /*
+        if ($token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' =>'Unauthorized'], 401);
+        }
+        return $this->respondWithToken($token);
+        */
+        $user = user::all('email');
+        
+        foreach ($user as $key => $email) { 
+
+            if ($request->email == $email) {
+                print($key);
+                
+            }
+        }
+        
+    }
+
+    
 }
