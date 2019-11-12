@@ -8,6 +8,8 @@ use Firebase\JWT\JWT;
 
 class UserController extends Controller
 {
+
+    private $key = "example-key";
     /**
      * Display a listing of the resource.
      *
@@ -36,18 +38,18 @@ class UserController extends Controller
      */
     public function userStore(Request $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
+        $user = new User($request);
+        $user->register();
 
-        $key = "example-key";
         $data_token = [
             "email" => $user->email,
         ];
 
-        $token = JWT::encode($data_token, $key);
+        $token = JWT::encode($data_token, $this->key);
+
+        return reponse()->json([
+            "token" => $token
+        ], 201);
     }
 
     /**
@@ -108,24 +110,34 @@ class UserController extends Controller
     public function login(Request $request) {
         
         //$credentials = request(['email', 'password']);
-
         /*
         if ($token = auth('api')->attempt($credentials)) {
             return response()->json(['error' =>'Unauthorized'], 401);
         }
         return $this->respondWithToken($token);
         */
-        $user = user::all('email');
-        
-        foreach ($user as $key => $email) { 
 
-            if ($request->email == $email) {
-                print($key);
-                
+        $users = User::all('email');
+
+        foreach ($users as $key => $user) 
+        { 
+            if ($request->email == $user->email) 
+            {
+                print('hola');     
             }
-        }
-        
+        }  
     }
 
     
 }
+
+
+
+
+
+// User::find();
+       //Buscar el usuario por email 
+       //Comprobas que user  de request y email y password de user son iguales
+       //si son iguales tengo que codificar el token 
+       //despues devolver la respuesta json con el token y un codigo 200
+       //si son iguales devolver la respuesta json con codigo 401
