@@ -38,8 +38,8 @@ class UserController extends Controller
      */
     public function userStore(Request $request)
     {
-        $user = new User($request);
-        $user->register();
+        $user = new User();
+        $user->register($request);
 
         $data_token = [
             "email" => $user->email,
@@ -47,7 +47,7 @@ class UserController extends Controller
 
         $token = JWT::encode($data_token, $this->key);
 
-        return reponse()->json([
+        return response()->json([
             "token" => $token
         ], 201);
     }
@@ -123,7 +123,9 @@ class UserController extends Controller
         { 
             if ($request->email == $user->email) 
             {
-                print('hola');     
+                return response()->json([
+                    "token" => $token
+                ], 201);     
             }
         }  
     }
