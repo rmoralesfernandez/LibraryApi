@@ -39,6 +39,12 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->description = $request->description;
         $book->save();
+
+        //obtener de la cabecera el token
+        //decodificar el token
+        //comprobar en bse de datoa si el emial existe
+        //si existe estamos
+        //si no existe no estamos
     }
 
     /**
@@ -47,7 +53,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $books)
     {
         $books = book::all();
         foreach ($books as $key => $value) {

@@ -58,9 +58,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showUser(User $users)
     {
-        //
+        $users = User::all();
+        foreach ($users as $key => $value) {
+            print($value);
+        }
     }
 
     /**
