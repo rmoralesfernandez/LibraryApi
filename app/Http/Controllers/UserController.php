@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Helpers\Token;
 use Firebase\JWT\JWT;
 
 class UserController extends Controller
 {
-
-    private $key = "example-key";
+    private $token;
+    private $tokenEncode;
     /**
      * Display a listing of the resource.
      *
@@ -39,16 +40,20 @@ class UserController extends Controller
     public function userStore(Request $request)
     {
         $user = new User();
+        //var_dump($request->name);exit;
+
         $user->register($request);
 
         $data_token = [
             "email" => $user->email,
         ];
 
-        $token = JWT::encode($data_token, $this->key);
+        $this->token = new Token($data_token);
+        $this->tokenEncode = $this->token->encode();
+        //$token = JWT::encode($data_token, $this->key);
 
         return response()->json([
-            "token" => $token
+            "token" => $this->tokenEncode
         ], 201);
     }
 
@@ -121,13 +126,15 @@ class UserController extends Controller
         */
 
         $users = User::all('email');
+        $this->token = new Token();
+        $tokenEncode = $this->token->encode();
 
         foreach ($users as $key => $user) 
         { 
-            if ($request->email == $user->email) 
+            if ($request->email == $user->email && $request->password == $user->password) 
             {
                 return response()->json([
-                    "token" => $token
+                    "token" => $tokenEncode
                 ], 201);     
             }
         }  
