@@ -125,7 +125,7 @@ class UserController extends Controller
         return $this->respondWithToken($token);
         */
 
-        $users = User::all('email');
+        $users = User::all();
         $this->token = new Token();
         $tokenEncode = $this->token->encode();
 
@@ -135,7 +135,11 @@ class UserController extends Controller
             {
                 return response()->json([
                     "token" => $tokenEncode
-                ], 201);     
+                ], 200);     
+            }
+            else 
+            {
+                return response()->json(401);
             }
         }  
     }
@@ -152,4 +156,4 @@ class UserController extends Controller
        //Comprobas que user  de request y email y password de user son iguales
        //si son iguales tengo que codificar el token 
        //despues devolver la respuesta json con el token y un codigo 200
-       //si son iguales devolver la respuesta json con codigo 401
+       //si no son iguales devolver la respuesta json con codigo 401
