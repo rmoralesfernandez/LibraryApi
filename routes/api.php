@@ -25,3 +25,5 @@ Route::apiResource('users', 'UserController');
 Route::post('userStore', 'UserController@userStore');
 Route::post('login', 'UserController@login');
 Route::GET('showUser', 'UserController@showUser');
+
+Route::GET()

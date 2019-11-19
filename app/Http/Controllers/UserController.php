@@ -9,8 +9,8 @@ use Firebase\JWT\JWT;
 
 class UserController extends Controller
 {
-    private $token;
-    private $tokenEncode;
+    //private $token;
+    //private $tokenEncode;
     /**
      * Display a listing of the resource.
      *
@@ -48,12 +48,12 @@ class UserController extends Controller
             "email" => $user->email,
         ];
 
-        $this->token = new Token($data_token);
-        $this->tokenEncode = $this->token->encode();
+        $token = new Token($data_token);
+        $tokenEncode = $token->encode();
         //$token = JWT::encode($data_token, $this->key);
 
         return response()->json([
-            "token" => $this->tokenEncode
+            "token" => $tokenEncode
         ], 201);
     }
 
@@ -126,13 +126,19 @@ class UserController extends Controller
         */
 
         $users = User::all();
-        $this->token = new Token();
-        $tokenEncode = $this->token->encode();
+        
 
         foreach ($users as $key => $user) 
         { 
             if ($request->email == $user->email && $request->password == $user->password) 
             {
+                $data_token = [
+                    "email" => $user->email,
+                ];
+
+                $token = new Token();
+                $tokenEncode = $token->encode();
+
                 return response()->json([
                     "token" => $tokenEncode
                 ], 200);     
