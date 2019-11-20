@@ -125,8 +125,7 @@ class UserController extends Controller
         return $this->respondWithToken($token);
         */
 
-        $users = User::all();
-        
+        $users = User::all();       
 
         foreach ($users as $key => $user) 
         { 
@@ -137,17 +136,16 @@ class UserController extends Controller
                 ];
 
                 $token = new Token();
-                $tokenEncode = $token->encode();
+                $tokenEncode = $token->encode($data_token);
 
                 return response()->json([
                     "token" => $tokenEncode
                 ], 200);     
             }
-            else 
-            {
-                return response()->json(401);
-            }
-        }  
+        }
+            return response()->json([
+                "error" => "El email o la contraseña son erroneas"
+            ],401);
     }
 
     

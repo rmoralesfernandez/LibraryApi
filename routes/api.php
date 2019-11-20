@@ -26,4 +26,4 @@ Route::post('userStore', 'UserController@userStore');
 Route::post('login', 'UserController@login');
 Route::GET('showUser', 'UserController@showUser');
 
-Route::GET()
+//Route::GET()
