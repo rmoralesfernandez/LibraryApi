@@ -40,6 +40,11 @@ class BookController extends Controller
         $book->description = $request->description;
         $book->save();
 
+        $token_header = $request->header('Authorization');
+        $token = new Token();
+        $data = $token->decode($token_header);
+        $data->email;
+
         //obtener de la cabecera el token
         //decodificar el token
         //comprobar en bse de datoa si el emial existe

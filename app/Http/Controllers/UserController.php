@@ -124,31 +124,40 @@ class UserController extends Controller
         }
         return $this->respondWithToken($token);
         */
+        //$users = User::all();
+        //foreach ($users as $key => $user) 
+        //{ 
+            //if ($request->email == $user->email && $request->password == $user->password) 
+            //{
+            //}
+        //}
 
-        $users = User::all();       
+        /*$where = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];*/
+        $data_token = [
+            'email' => $request->email,
+        ];
 
-        foreach ($users as $key => $user) 
-        { 
-            if ($request->email == $user->email && $request->password == $user->password) 
-            {
-                $data_token = [
-                    "email" => $user->email,
-                ];
-
-                $token = new Token();
-                $tokenEncode = $token->encode($data_token);
-
-                return response()->json([
-                    "token" => $tokenEncode
-                ], 200);     
-            }
-        }
-            return response()->json([
-                "error" => "El email o la contraseña son erroneas"
-            ],401);
-    }
-
+        $user = User::where($data_token)->first();
+        
+        if($user->password == $request->password)
+        {
+            
     
+            $token = new Token($data_token);
+            $tokenEncode = $token->encode();
+    
+            return response()->json([
+                "token" => $tokenEncode
+            ], 200);
+        }
+
+        return response()->json([
+            "message" => "Unauthorized"
+        ],401);
+    } 
 }
 
 
