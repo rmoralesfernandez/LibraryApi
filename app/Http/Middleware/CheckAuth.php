@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Middleware;
-use App\Helpers\Token;
-use Firebase\JWT\JWT;
 
 use Closure;
+use App\User;
 
-class Admin
+class CheckAuth
 {
     /**
      * Handle an incoming request.
@@ -17,8 +16,13 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $token = $request->header('Authorization');
+        $user = new User();
+
+        if($user->is_authorized($request))
+        {
+            return $next($request);
+        }
         
-        return $next($request);
+        var_dump('no tienes permisos'); exit;
     }
 }

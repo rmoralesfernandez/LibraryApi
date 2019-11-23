@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Book;
 use App\Helpers\Token;
-use Firebase\JWT\JWT;
+
 
 class UserController extends Controller
 {
@@ -158,6 +159,13 @@ class UserController extends Controller
             "message" => "Unauthorized"
         ],401);
     } 
+
+    public function lend(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $book = Book::find($request->book_id);
+        $user->books()->attach($book);
+    }
 }
 
 
