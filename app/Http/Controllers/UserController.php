@@ -162,9 +162,18 @@ class UserController extends Controller
 
     public function lend(Request $request)
     {
-        $user = User::find($request->user_id);
-        $book = Book::find($request->book_id);
-        $user->books()->attach($book);
+        $token = new Token();
+        $header_authorization = $request->header('Authorization');
+        $data = $token->decode($header_authorization);
+
+        $user = User::where('email', $data->email)->first();
+        // $user = User::find($request->id_user);
+        $book = Book::find('id', $request->id_book)->first();
+        // var_dump($book->id);exit;
+
+        $user->books()->attach($book->id);
+
+        return 'se ha prestado el libro';
     }
 }
 

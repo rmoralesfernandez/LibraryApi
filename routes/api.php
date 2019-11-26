@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function ()
 {
     Route::apiResource('books', 'BooksController');
     Route::post('store', 'BookController@store');
+    Route::post('lend', 'UserController@lend');
 });
 
 //Route::GET()

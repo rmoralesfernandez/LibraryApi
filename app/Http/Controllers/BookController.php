@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\book;
+use App\Helpers\Token;
 
 class BookController extends Controller
 {
