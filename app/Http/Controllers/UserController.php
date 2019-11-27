@@ -168,8 +168,8 @@ class UserController extends Controller
 
         $user = User::where('email', $data->email)->first();
         // $user = User::find($request->id_user);
-        $book = Book::find('id', $request->id_book)->first();
-        // var_dump($book->id);exit;
+        $book = Book::where('id', $request->id_book)->first();
+        //var_dump($book->id);exit;
 
         $user->books()->attach($book->id);
 

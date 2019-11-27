@@ -24,7 +24,7 @@ Route::apiResource('users', 'UserController');
 Route::post('userStore', 'UserController@userStore');
 Route::post('login', 'UserController@login');
 Route::GET('showUser', 'UserController@showUser');
-Route::post('users/lend', 'UsersController@lend');
+//Route::post('users/lend', 'UsersController@lend');
 
 Route::group(['middleware' => ['auth']], function ()
 {

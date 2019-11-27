@@ -14,7 +14,7 @@ class CreateLendTable extends Migration
     public function up()
     {
         Schema::create('lend', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
             
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_book');
